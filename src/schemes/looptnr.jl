@@ -258,7 +258,7 @@ function opt_T(
         return b
     end
     new_T, info = linsolve(
-        apply_f, W, psi; krylovdim = 20, maxiter = 20, tol = 1.0e-12,
+        apply_f, W, psi; krylovdim = 40, maxiter = 100, tol = 1.0e-12,
         verbosity = 0
     )
     return new_T
