@@ -1,5 +1,5 @@
-![TNRKit Logo](https://github.com/VictorVanthilt/TNRKit.jl/blob/master/docs/src/assets/logo-dark.svg#gh-dark-mode-only)
-![TNRKit Logo](https://github.com/VictorVanthilt/TNRKit.jl/blob/master/docs/src/assets/logo.svg#gh-light-mode-only)
+![TNRKit Logo](https://github.com/QuantumKitHub/TNRKit.jl/blob/master/docs/src/assets/logo-dark.svg#gh-dark-mode-only)
+![TNRKit Logo](https://github.com/QuantumKitHub/TNRKit.jl/blob/master/docs/src/assets/logo.svg#gh-light-mode-only)
 
 # TNRKit.jl
 | **Documentation** | **Build Status** | **Digital Object Identifyer** | **Coverage** |
@@ -7,19 +7,19 @@
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![CI][ci-img]][ci-url] | [![DOI][doi-img]][doi-url] | [![Codecov][codecov-img]][codecov-url] |
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[docs-stable-url]: https://VictorVanthilt.github.io/TNRKit.jl/stable
+[docs-stable-url]: https://QuantumKitHub.github.io/TNRKit.jl/stable
 
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[docs-dev-url]: https://VictorVanthilt.github.io/TNRKit.jl/dev
+[docs-dev-url]: https://QuantumKitHub.github.io/TNRKit.jl/dev
 
-[ci-img]: https://github.com/VictorVanthilt/TNRKit.jl/actions/workflows/CI.yml/badge.svg
-[ci-url]: https://github.com/VictorVanthilt/TNRKit.jl/actions/workflows/CI.yml
+[ci-img]: https://github.com/QuantumKitHub/TNRKit.jl/actions/workflows/CI.yml/badge.svg
+[ci-url]: https://github.com/QuantumKitHub/TNRKit.jl/actions/workflows/CI.yml
 
 [doi-img]: https://zenodo.org/badge/DOI/10.5281/zenodo.16836269.svg
 [doi-url]: https://doi.org/10.5281/zenodo.16836269
 
-[codecov-img]: https://codecov.io/gh/VictorVanthilt/TNRKit.jl/graph/badge.svg?token=XEOJODNBF3
-[codecov-url]: https://codecov.io/gh/VictorVanthilt/TNRKit.jl
+[codecov-img]: https://codecov.io/gh/QuantumKitHub/TNRKit.jl/graph/badge.svg?token=XEOJODNBF3
+[codecov-url]: https://codecov.io/gh/QuantumKitHub/TNRKit.jl
 
 
 TNRKit.jl is a Julia package that aims to implement as many tensor network renormalization (TNR) schemes as possible.
@@ -48,6 +48,7 @@ The following schemes are currently implemented:
 
 **2D honeycomb CTM methods**
 - c3vCTM_honeycomb (c3v symmetric CTM on the honeycomb lattice)
+- CTM_honeycomb (CTM on the honeycomb lattice)
 
 **2D Impurity Methods**
 - ImpurityTRG (Expectation value calculation via TRG)
@@ -59,6 +60,7 @@ The following schemes are currently implemented:
 **3D cubic tensor networks**
 - ATRG_3D (anisotropic TRG)
 - HOTRG_3D (higher order TRG)
+- ThermalTNR (thermal TNR)
 
 This project is under active development. The interface is subject to changes. Any feedback about the user interface or the internals is much appreciated. The github discussions page is a great place to talk!
 
@@ -112,7 +114,8 @@ TNRKit includes several common models out of the box.
 - Potts model in 2D: `classical_potts(S, q, β)`, where `S` can be `Trivial` or `ZNIrrep{q}` to specify the symmetry.
 - Potts model in 2D with impurities: `classical_potts_impurity(q, β)`.
 - Six Vertex model: `sixvertex(S, elt; a=1.0, b=1.0, c=1.0)` where `S` can be `Trivial`, `U1Irrep` or `CU1Irrep` to specify the symmetry and `elt` can be any number type (default is `Float64`).
-- Clock model: `classical_clock(S, q, β)` where `S` can be `Trivial` or `ZNIrrep{q}` to specify the symmetry.
+- Clock model: `classical_clock(S, q, β)` where `S` can be `Trivial`, `ZNIrrep{q}` or `DNIrrep{q}` to specify the symmetry.
+- ZN Gauge theory in 3D: `ZN_gaugetheory_dual(N, β)` where `N` is the order of the gauge group.
 - XY model in 2D: `classical_XY(S, β, charge_trunc)` where `S` can be `U1Irrep` or `CU1Irrep` to specify the symmetry.
 - Real $\phi^4$ model: `phi4_real(S, K, μ0, λ, h)` where `S` can be `Trivial` or `Z2Irrep` to specify the symmetry.
 - Real $\phi^4$ model with impurities: `phi4_real_imp1(S, K, μ0, λ, h)` and `phi4_real_imp2(S, K, μ0, λ, h)` where `S` can be `Trivial`.

@@ -3,12 +3,12 @@ $(TYPEDEF)
 
 Loop Optimization for Tensor Network Renormalization
 
-### Constructors
+# Constructors
     $(FUNCTIONNAME)(T)
     $(FUNCTIONNAME)(TA, TB)
     $(FUNCTIONNAME)(unitcell_2x2::Matrix{T})
 
-### Running the algorithm
+# Running the algorithm
     run!(::LoopTNR, trunc::TruncationStrategy, criterion::stopcrit, parameters::LoopParameters, finalizer::Finalizer[,
               entanglement_criterion::stopcrit, finalize_beginning=true, verbosity=1])
     
@@ -16,17 +16,17 @@ Loop Optimization for Tensor Network Renormalization
 
     run!(::LoopTNR, trscheme::TruncationStrategy, criterion::stopcrit[finalize_beginning=true, verbosity=1])
 
-### LoopParameters
+# LoopParameters
 See also: [`LoopParameters`](@ref)
 This stuct is used to set all internal parameters in LoopTNR.
-It can also be used to control wether Krylov methods are used (default: false)
-And wether nuclear norm regularization is used (default: false)
+It can also be used to control whether Krylov methods are used (default: false)
+And whether nuclear norm regularization is used (default: false)
 
-### Fields
+# Fields
 
 $(TYPEDFIELDS)
 
-### References
+# References
 * [Yang et. al. Phys. Rev. Letters 118 (2017)](@cite yang2017)
 * [Homma et. al. Phys. Rev. Res. 6 (2024)](@cite homma2024a)
 
@@ -53,7 +53,7 @@ Parameters used during LoopTNR.
 This struct allows the user to control how the linear problem is solved.
 It also allows the user to turn on nuclear norm regularization.
 
-### Fields
+# Fields
 
     $(TYPEDFIELDS)
 """
@@ -65,7 +65,8 @@ It also allows the user to turn on nuclear norm regularization.
     # Krylov parameters
     "Use Krylov methods to solve the linear system in loop optimization. Default = false, which uses the backslash operator."
     krylov::Bool = false
-    krylovalg::A = GMRES(; verbosity = 0)
+    "Default Krylov algorithm is GMRES with maxiter = 250, krylovdim = 128, tol = 1.0e-10, verbosity = 0."
+    krylovalg::A = GMRES(; maxiter = 250, krylovdim = 128, tol = 1.0e-10, verbosity = 0)
 
     # NNR parameters
     "Use Nuclear Norm Regularisation. Default = false"
@@ -432,7 +433,9 @@ function loop_opt(
 end
 
 """
-Coarse-grain `ΨB` to renormalized `TA`, `TB` tensors
+Coarse-grain `ΨB` to renormalized `TA`, `TB` tensors.
+The lattice is rotated by 135 degrees in counter clockwise direction.
+The elementary modular parameter `τ₀ ↦ (1 + τ₀) / (1 - τ₀)`.
 """
 function ΨB_to_TATB(psiB::Vector{T}) where {T <: AbstractTensorMap{<:Any, <:Any, 1, 2}}
     #= 

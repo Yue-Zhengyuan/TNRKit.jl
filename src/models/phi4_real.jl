@@ -41,7 +41,7 @@ end
 #####################################
 
 """
-    phi4_real(K::Integer, μ0::Float64, λ::Float64, h::Float64 = 0.0; kwargs....)
+    phi4_real(K::Integer, μ0::Float64, λ::Float64, h::Float64 = 0.0; kwargs...)
     phi4_real(::Type{Trivial}, K::Integer, μ0::Float64, λ::Float64, h::Float64 = 0.0; T::Type{<:Number} = Float64)
     phi4_real(::Type{Z2Irrep}, K::Integer, μ0::Float64, λ::Float64; T::Type{<:Number} = Float64)
 
@@ -49,18 +49,25 @@ Constructs the partition function tensor for a 2D square lattice
 for the real ϕ^4 model with a given approximation (and bond dimension) `K`, bare mass ``µ_0^2`` `μ0`, interaction constant `λ` and external field `h`.
 
 Compatible with no symmetry or with explicit ℤ₂ symmetry on each of its spaces.
-The latter is based on Taylor expanding the mixed sites term, and requires the external field `h` to be zero.
 Defaults to ℤ₂ symmetry and `h = 0` if the symmetry type and magnetic field are not provided.
 
-It is based on [Gauss-Hermite quadrature](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature).
-
-### Arguments
-- `K::Integer`: Number of quadrature points for Gauss-Hermite integration. Has to be even for the ℤ₂ symmetric version.
+# Arguments
+- `K::Integer`: Approximation parameter.
 - `μ0::Float64`: Bare mass. Note that in the calculation actually ``µ_0^2`` is used, but for readibility we write the ``µ_0^2`` as μ0
 - `λ::Float64`: Coupling constant.
 - `h::Float64`: External field (default is 0).
 
-### Examples
+# Approximation parameter `K`
+## Trivial (no symmetry)
+The tensor is constructed by performing a Gauss-Hermite quadrature to approximate the integrals in the partition function.
+The bond dimension is equal to the number of quadrature points `K`.
+
+## ℤ₂ symmetry
+The tensor is constructed by Taylor expanding the mixed sites term in the partition function.
+The order of the Taylor expansion is K, and the bond dimension is K/2 for the even and odd sectors each (K in total).
+Not compatible with a non-zero magnetic field, as the magnetic field breaks the ℤ₂ symmetry.
+
+# Examples
 ```julia
     phi4_real(10, -1.0, 1.0, 1.0) # default ℤ₂ symmetry, h = 0
     phi4_real(Trivial, 10, -1.0, 1.0, 1.0) # no symmetry with magnetic field
@@ -69,7 +76,7 @@ It is based on [Gauss-Hermite quadrature](https://en.wikipedia.org/wiki/Gauss%E2
 !!! info
     When studying this model with impurities, the tensor without symmetry should be constructed, as the impurity breaks the ℤ₂ symmetry.
 
-### References
+# References
 * [Kadoh et. al. 10.1007/JHEP05(2019)184 (2019)](@cite kadoh2019)
 * [Delcamp et. al. Phys. Rev. Research 2, 033278 (2020)](@cite delcamp2020)
 
@@ -157,18 +164,18 @@ The impurity is a ϕ operator on this site.
 
 It is based on [Gauss-Hermite quadrature](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature).
 
-### Arguments
+# Arguments
 - `K::Integer`: Number of quadrature points for Gauss-Hermite integration.
 - `μ0::Float64`: Bare mass. Note that in the calculation actually ``µ_0^2`` is used, but for readibility we write the ``µ_0^2`` as μ0
 - `λ::Float64`: Coupling constant.
 - `h::Float64`: External field (default is 0).
 
-### Examples
+# Examples
 ```julia
     phi4_real_imp1(10, -1.0, 1.0, 0.0)
 ```
 
-### References
+# References
 * [Kadoh et. al. 10.1007/JHEP05(2019)184 (2019)](@cite kadoh2019)
 
 See also: [`phi4_real`](@ref), [`phi4_real_imp2`](@ref).
@@ -212,18 +219,18 @@ The impurity is a ϕ^2 operator on this site.
 
 It is based on [Gauss-Hermite quadrature](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature).
 
-### Arguments
+# Arguments
 - `K::Integer`: Number of quadrature points for Gauss-Hermite integration.
 - `μ0::Float64`: Bare mass. Note that in the calculation actually ``µ_0^2`` is used, but for readibility we write the ``µ_0^2`` as μ0
 - `λ::Float64`: Coupling constant.
 - `h::Float64`: External field (default is 0).
 
-### Examples
+# Examples
 ```julia
     phi4_real_imp2(10, -1.0, 1.0, 0.0)
 ```
 
-### References
+# References
 * [Kadoh et. al. 10.1007/JHEP05(2019)184 (2019)](@cite kadoh2019)
 
 See also: [`phi4_real`](@ref), [`phi4_real_imp1`](@ref).
